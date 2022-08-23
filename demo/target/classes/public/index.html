@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial;
+            color: white;
+        }
+
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .left {
+            left: 0;
+            background-color: #111;
+        }
+
+        .right {
+            right: 0;
+            background-color: #111;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .centered img {
+            width: 150px;
+            border-radius: 50%;
+        }
+
+        .button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button1 {
+            background-color: #4CAF50;
+            /* Green */
+        }
+    </style>
+</head>
+<body>
+<div class="split left">
+    <h2>SQL Injection Challenge</h2>
+    <img src="img/sql_inj_img.png" alt="Sql_inj" width="750" height="333">
+    <p>Probably one of the most common and well-known PHP vulnerabilities is SQLi, and it’s a big problem.
+    <br><br>
+Essentially how this works is by somebody inserting an SQL argument, such as a database statement, as a value in a form, or even possibly your URL. The PHP application may then consider it as valid code and run it, leaving you open to some potentially major problems. This can even include giving almost complete access to your whole website.
+<br><br>
+The best way to avoid this vulnerability or bug is to always check values entered into any field using prepared statements. This allows the data to be treated only as data, rather than potentially being run as code.
+<br><br>
+This challenge asks you to pull user information with id=2 from database, protected against sql injection vulnerability.
+</p>
+</div>
+</div>
+<div class="split right">
+    <h2>Coding Challenge</h2>
+    <textarea rows="30" cols="110" name="code" form="usrform"><!DOCTYPE html>
+<html>
+  <body>
+    <form action="sql.php" method="get"> Name: <input type="text" name="id">
+      <br>
+      <input type="submit">
+    </form> <?php
+
+	$database ="mydb";  
+  	$user = "root";
+  	$password = "secret";  
+  	$host = "mysql-container";
+
+	// Write your code here. START
+	$connection = new PDO("mysql:host=$host;port=3306;dbname=$database;charset=utf8", $user, $password);  
+        $qry = "select * from persons where id=".$_GET['id'];
+        $data = $connection->query($qry)->fetchAll();
+        
+        // print
+  	foreach($data as $row) {
+        	echo $row['id'] .", ";
+		echo $row['last_name'] .", ";
+        	echo $row['first_name'] .", ";
+        	echo $row['address'] .", ";
+        	echo $row['city'];
+  	}
+    
+    ?>
+  </body>
+</html>
+</textarea>
+    <br>
+    <form action="/run-test" id="usrform" method="post">
+        <input class="button button1" value="Run Test" type="submit">
+    </form>
+</div>
+</div>
+</body>
+</html>
